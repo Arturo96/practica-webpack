@@ -19,19 +19,24 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{
+				test: /\.(sa|sc|c)ss$/,
+				use: [
+				  {
+					loader: MiniCssExtractPlugin.loader,
+					options: {
+					  hmr: process.env.NODE_ENV === 'development',
+					},
+				  },
+				  'css-loader',
+				  'sass-loader',
+				],
+			  },
             { 
                 test: /\.js$/, 
                 exclude: /node_modules/, 
                 loader: "babel-loader" },
-			{
-				test: /\.css$/,
-				exclude: /styles\.css$/,
-				use: ["style-loader", "css-loader"]
-			},
-			{
-				test: /styles\.css$/,
-				use: [MiniCssExtractPlugin.loader, "css-loader"]
-			},
+			
 			{
 				test: /\.html$/,
 				loader: "html-loader",
@@ -55,8 +60,8 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebPackPlugin({
-			template: "./src/index.html",
-			filename: "./index.html"
+			filename: "./index.html",
+			template: "./src/index.html"
 		}),
 		new MiniCssExtractPlugin({
 			filename: "[name].[contentHash].css",

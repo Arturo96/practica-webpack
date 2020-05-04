@@ -14,20 +14,18 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
-                exclude: /styles\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            },
-            {
-                test: /styles\.css$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader'
-                ]
-            },
+				test: /\.(sa|sc|c)ss$/,
+				use: [
+				  {
+					loader: MiniCssExtractPlugin.loader,
+					options: {
+					  hmr: process.env.NODE_ENV === 'development',
+					},
+				  },
+				  'css-loader',
+				  'sass-loader',
+				],
+			  },
             {
 				test: /\.html$/,
 				loader: "html-loader",
